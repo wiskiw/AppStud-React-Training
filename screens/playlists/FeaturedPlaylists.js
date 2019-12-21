@@ -4,10 +4,13 @@ import {
     FlatList,
     StyleSheet,
     ToastAndroid,
+    Text,
 } from 'react-native';
 import Constants from 'expo-constants';
 import PropTypes from 'prop-types';
 
+import Colors from '../../constants/Colors';
+import Layout from '../../constants/Layout';
 import PlaylistTile from '../../components/PlaylistTile';
 
 const COLUMNS_NUM = 2;
@@ -33,8 +36,17 @@ export default class FeaturedPlaylists extends React.Component {
         ToastAndroid.show(errorMessage, ToastAndroid.LONG);
     }
 
+    _renderHeader = (title) => {
+        return (
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>{title}</Text>
+            </View>
+        );
+    };
+
     render() {
         const {
+            title,
             playlists,
             isLoading,
             error,
@@ -54,8 +66,8 @@ export default class FeaturedPlaylists extends React.Component {
         return (
             <View style={styles.container}>
                 {
-                    playlists &&
                     <FlatList
+                        ListHeaderComponent={this._renderHeader(title)}
                         numColumns={COLUMNS_NUM}
                         data={playlists}
                         renderItem={({item, index}) => (
@@ -78,6 +90,19 @@ export default class FeaturedPlaylists extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.background,
         marginTop: Constants.statusBarHeight,
     },
+
+    titleContainer: {
+        height: Layout.headerSize,
+        justifyContent: "center"
+    },
+
+    title: {
+        fontSize: Layout.headerTextSize,
+        fontWeight: "700",
+        color: Colors.primaryText,
+        paddingLeft: Layout.paddingNormal
+    }
 });

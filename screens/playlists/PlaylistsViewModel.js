@@ -12,11 +12,11 @@ export default class PlaylistsViewModel {
         this._playlistsRepository = playlistsRepository;
     }
 
-    async loadPlaylists(offset, limit) {
+    async loadPlaylistsMeta(offset, limit) {
         const playlists = [];
-        const rawPlaylists = await this._playlistsRepository.getAll(offset, limit);
+        const playlistsData = await this._playlistsRepository.getRange(offset, limit);
 
-        rawPlaylists.forEach(rawPlaylist => {
+        playlistsData.playlists.forEach(rawPlaylist => {
             const isImagesExist = typeof rawPlaylist.images !== 'undefined' && rawPlaylist.images.length > 0;
             const imageUrl = isImagesExist
                 ? rawPlaylist.images[0].url
@@ -34,7 +34,10 @@ export default class PlaylistsViewModel {
             throw Error("No playlists available");
         }
 
-        return playlists;
+        return {
+            title: playlistsData.message,
+            playlists: playlists
+        };
     }
 
 }

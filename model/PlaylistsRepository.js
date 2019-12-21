@@ -12,11 +12,14 @@ export default class PlaylistsRepository {
     /**
      * Return promise to fetch all playlists since #offset and limited by #limit.
      */
-    async getAll(offset, limit) {
+    async getRange(offset, limit) {
         let playlists;
         try {
             playlists = await this._serverApi.getPlaylists(offset, limit);
-            return playlists.playlists.items
+            return {
+                message: playlists.message,
+                playlists: playlists.playlists.items
+            }
 
         } catch (errorCode) {
             return `Playlists request failed (code ${errorCode}). Try again later.`;

@@ -40,7 +40,7 @@ export default class HomeScreen extends React.Component {
                             onPress={() => {
                                 ToastAndroid.show(`loading`, ToastAndroid.SHORT);
 
-                                this._playlistsModel.getAll(0, 2)
+                                this._playlistsModel.getRange(0, 2)
                                     .then((playlists) => {
                                         ToastAndroid.show(`playlists: ${JSON.stringify(playlists)}`, ToastAndroid.SHORT);
                                     })

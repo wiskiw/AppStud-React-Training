@@ -9,4 +9,10 @@ export default {
     height,
   },
   isSmallDevice: width < 375,
+
+  headerSize: 64,
+  headerTextSize: 32,
+
+
+    paddingNormal: 8,
 };

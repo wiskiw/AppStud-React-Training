@@ -12,6 +12,7 @@ export default class PlaylistsController extends React.Component {
         super(props);
 
         this.state = {
+            title: "",
             offset: 0,
             playlists: [],
             isLoading: false,
@@ -48,11 +49,12 @@ export default class PlaylistsController extends React.Component {
         this._changeLoadingState(true);
         this._changeError(null);
 
-        this._viewModel.loadPlaylists(this.state.offset, PLAYLIST_LOAD_LIMIT)
-            .then(newPlaylists => {
+        this._viewModel.loadPlaylistsMeta(this.state.offset, PLAYLIST_LOAD_LIMIT)
+            .then(playlistsMeta => {
                 this._changeLoadingState(false);
-                this._setIsEndReached(newPlaylists.length === 0);
-                this._appendPlaylists(newPlaylists);
+                this._setTitle(playlistsMeta.title);
+                this._setIsEndReached(playlistsMeta.playlists.length === 0);
+                this._appendPlaylists(playlistsMeta.playlists);
             })
             .catch((error) => {
                 this._changeLoadingState(false);
@@ -84,11 +86,18 @@ export default class PlaylistsController extends React.Component {
         });
     }
 
+    _setTitle(title) {
+        this.setState({
+            title: title,
+        });
+    }
+
     render() {
         return (
             <FeaturedPlaylists
-                isLoading={this.state.isLoading}
+                title={this.state.title}
                 playlists={this.state.playlists}
+                isLoading={this.state.isLoading}
 
                 loadMorePlaylists={this.loadMorePlaylists}
                 onPlaylistClick={this.onPlaylistClick}
