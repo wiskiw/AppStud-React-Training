@@ -4,34 +4,46 @@
 export default class NetworkService {
 
     static async get(url = '', params = {}) {
-        // todo check params
-        const response = await fetch(url, params);
-        return this._checkResponse(response);
+        return this._fetch(url, params);
     }
 
     static async post(url, params = {}) {
-        const options = {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, cors, *same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            // credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            // redirect: 'follow', // manual, *follow, error
-            // referrer: 'no-referrer', // no-referrer, *client
-            body: JSON.stringify(params), // тип данных в body должен соответвовать значению заголовка "Content-Type"
-        };
-
-        const response = await fetch(url, options);
-        return this._checkResponse(response);
+        return this._fetch(url, params, 'POST');
     }
 
-    static _checkResponse(response) {
-        if (!response.ok) {
-            throw new Error(`${response.status}`);
+    static async _fetch(url, params, method = 'GET') {
+        const options = {
+            method,
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            headers: {
+                'Content-Type': 'application/json' // we will be sending JSON
+            },
+        };
+
+        // if params exists and method is GET, add query string to url
+        // otherwise, just add params as a "body" property to the options object
+        if (params) {
+            if (method === 'GET') {
+                url += '?' + this._objectToQueryString(params);
+            } else {
+                options.body = JSON.stringify(params); // body should match Content-Type in headers option
+            }
         }
-        return response.json();
+
+        return fetch(url, options)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`${response.status}`);
+                }
+                return response;
+            })
+            .then(response => response.json());
+    }
+
+    static _objectToQueryString(obj) {
+        return Object.keys(obj)
+            .map(key => key + '=' + obj[key])
+            .join('&');
     }
 }

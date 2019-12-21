@@ -27,8 +27,16 @@ export default class HomeScreen extends React.Component {
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                     <View style={styles.welcomeContainer}>
                         <PlaylistTile
-                            id='123'
-                            imageUrl='https://i.scdn.co/image/ab67706f00000002fce0a7d32f6ee3ca81d980d6'
+                            playlist={{
+                                id: '124',
+                                images: [
+                                    {
+                                        height: null,
+                                        url: "https://i.scdn.co/image/ab67706f00000002012147aa36dafb6530edda75",
+                                        width: null,
+                                    }
+                                ]
+                            }}
                             onPress={() => {
                                 ToastAndroid.show(`loading`, ToastAndroid.SHORT);
 
@@ -37,7 +45,7 @@ export default class HomeScreen extends React.Component {
                                         ToastAndroid.show(`playlists: ${JSON.stringify(playlists)}`, ToastAndroid.SHORT);
                                     })
                                     .catch((error) => {
-                                        ToastAndroid.show(`error: ${error}`, ToastAndroid.SHORT);
+                                        ToastAndroid.show(`error: ${error}`, ToastAndroid.LONG);
                                     });
 
                             }}
@@ -47,7 +55,7 @@ export default class HomeScreen extends React.Component {
                     <Button
                         title="Press Me"
                         onPress={() => {
-                            ToastAndroid.show('A pikachu appeared nearby !', ToastAndroid.SHORT);
+                            this.props.navigation.navigate('Playlists');
                         }}
                     />
 

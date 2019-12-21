@@ -12,9 +12,8 @@ import {
 export default class PlaylistTile extends React.Component {
 
     static propTypes = {
-        id: PropTypes.string.isRequired,
-        imageUrl: PropTypes.string.isRequired,
-        onPress: PropTypes.func.isRequired,
+        playlist: PropTypes.object.isRequired,
+        onPress: PropTypes.func,
     };
 
     static defaultProps = {
@@ -23,23 +22,26 @@ export default class PlaylistTile extends React.Component {
     };
 
     render() {
+        const playlist = this.props.playlist;
+
+        const isImagesExist = typeof playlist.images !== 'undefined' && playlist.images.length > 0;
+        const imageUrl = isImagesExist
+            ? playlist.images[0].url
+            : 'https://logomaster.ai/static/media/gallery002.936afb9d.png';
+
         const picture = {
-            uri: this.props.imageUrl
+            uri: imageUrl
         };
 
         return (
             <View style={styles.container}>
-
                 <TouchableHighlight onPress={this.props.onPress} underlayColor="white">
-
                     <Image
                         onPress={this._onClick}
                         style={styles.image}
                         source={picture}
                     />
-
                 </TouchableHighlight>
-
             </View>
         );
     }
@@ -48,16 +50,12 @@ export default class PlaylistTile extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        alignItems: 'center'
+        flex: 1,
+        margin:5
     },
     image: {
-        resizeMode: 'contain',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        width: 200,
-        height: 200
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        height: 200,
     },
 });
