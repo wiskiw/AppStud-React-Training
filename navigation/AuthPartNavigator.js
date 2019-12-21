@@ -4,7 +4,7 @@ import {
 } from 'react-navigation';
 
 import HomeScreen from '../screens/HomeScreen';
-import FeaturedPlaylists from '../screens/FeaturedPlaylists';
+import FeaturedPlaylistsProvider from "../screens/playlists/FeaturedPlaylistsProvider";
 
 
 export default createStackNavigator({
@@ -18,10 +18,14 @@ export default createStackNavigator({
     },
 
     Playlists: {
-        screen: FeaturedPlaylists,
+        screen: FeaturedPlaylistsProvider,
         navigationOptions: ({navigation}) => ({
             header: null,
             // title: `${navigation.state.params.name}'s Profile'`,
         }),
     }
-});
+
+    }, {
+        initialRouteName: 'Playlists'
+    }
+);

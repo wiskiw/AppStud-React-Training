@@ -23,14 +23,8 @@ export default class PlaylistTile extends React.Component {
 
     render() {
         const playlist = this.props.playlist;
-
-        const isImagesExist = typeof playlist.images !== 'undefined' && playlist.images.length > 0;
-        const imageUrl = isImagesExist
-            ? playlist.images[0].url
-            : 'https://logomaster.ai/static/media/gallery002.936afb9d.png';
-
         const picture = {
-            uri: imageUrl
+            uri: playlist.imageUrl
         };
 
         return (
@@ -57,5 +51,6 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         justifyContent: 'center',
         height: 200,
+        width: 200,
     },
 });

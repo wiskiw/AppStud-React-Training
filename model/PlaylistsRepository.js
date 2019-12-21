@@ -1,13 +1,13 @@
-import ServerApi from "../services/ServerApi";
-
 /**
- * Class for providing Playlists and localising fetch-data exceptions.
+ * Class for providing Playlists. Defines the data source (depending on network conditions ex.).
  *
- * todo: implement data caching
+ * todo: implement data caching here
  */
-export default class PlaylistsProvider {
+export default class PlaylistsRepository {
 
-    _serverApi = new ServerApi();
+    constructor(serverApi) {
+        this._serverApi = serverApi;
+    }
 
     /**
      * Return promise to fetch all playlists since #offset and limited by #limit.
@@ -19,7 +19,7 @@ export default class PlaylistsProvider {
             return playlists.playlists.items
 
         } catch (errorCode) {
-            return `Error occupied while getting playlists (code ${errorCode}). Try again later.`;
+            return `Playlists request failed (code ${errorCode}). Try again later.`;
         }
     }
 

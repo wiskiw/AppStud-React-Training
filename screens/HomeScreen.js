@@ -14,12 +14,12 @@ import Constants from 'expo-constants';
 import {MonoText} from '../components/StyledText';
 
 import PlaylistTile from '../components/PlaylistTile';
-import PlaylistsProvider from "./PlaylistsProvider";
+import PlaylistsRepository from "../model/PlaylistsRepository";
 
 
 export default class HomeScreen extends React.Component {
 
-    _playlistsModel = new PlaylistsProvider();
+    _playlistsModel = new PlaylistsRepository();
 
     render() {
         return (
