@@ -14,9 +14,12 @@ import Constants from 'expo-constants';
 import {MonoText} from '../components/StyledText';
 
 import PlaylistTile from '../components/PlaylistTile';
+import PlaylistsProvider from "./PlaylistsProvider";
 
 
 export default class HomeScreen extends React.Component {
+
+    _playlistsModel = new PlaylistsProvider();
 
     render() {
         return (
@@ -24,10 +27,19 @@ export default class HomeScreen extends React.Component {
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                     <View style={styles.welcomeContainer}>
                         <PlaylistTile
+                            id='123'
                             imageUrl='https://i.scdn.co/image/ab67706f00000002fce0a7d32f6ee3ca81d980d6'
                             onPress={() => {
-                                this.props.navigation.navigate('Playlists');
-                                ToastAndroid.show('A pikachu appeared nearby !', ToastAndroid.SHORT);
+                                ToastAndroid.show(`loading`, ToastAndroid.SHORT);
+
+                                this._playlistsModel.getAll(0, 2)
+                                    .then((playlists) => {
+                                        ToastAndroid.show(`playlists: ${JSON.stringify(playlists)}`, ToastAndroid.SHORT);
+                                    })
+                                    .catch((error) => {
+                                        ToastAndroid.show(`error: ${error}`, ToastAndroid.SHORT);
+                                    });
+
                             }}
                         />
                     </View>

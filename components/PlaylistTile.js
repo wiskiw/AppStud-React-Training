@@ -12,6 +12,7 @@ import {
 export default class PlaylistTile extends React.Component {
 
     static propTypes = {
+        id: PropTypes.string.isRequired,
         imageUrl: PropTypes.string.isRequired,
         onPress: PropTypes.func.isRequired,
     };

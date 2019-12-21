@@ -39,11 +39,29 @@ export default class FeaturedPlaylists extends React.Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
+                {/*<FlatList*/}
+                {/*    numColumns={2}*/}
+                {/*    data={DATA}*/}
+                {/*    renderItem={({item}) => <Item title={item.title}/>}*/}
+                {/*    keyExtractor={item => item.id}*/}
+                {/*/>*/}
+
                 <FlatList
-                    data={DATA}
-                    renderItem={({item}) => <Item title={item.title}/>}
-                    keyExtractor={item => item.id}
+                    numColumns={2}
+                    data={playlists}
+                    renderItem={({playlist}) => (
+                        <PlaylistTile
+                            id={playlist.id}
+                            imageUrl={playlist.imageUrl}
+                        />
+                    )}
+                    keyExtractor={i => i.email}
+                    refreshing={isRefreshing}
+                    onRefresh={this.handleRefresh}
+                    onEndReached={this.handleLoadMore}
+                    onEndThreshold={0}
                 />
+
             </SafeAreaView>
         );
     }
