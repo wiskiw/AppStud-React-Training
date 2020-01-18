@@ -1,10 +1,10 @@
 /**
- * Server API implementation
+ * Spotify server API implementation
  */
 import NetworkService from "./NetworkService";
 import {API} from "../index";
 
-export default class ServerApi {
+export default class SpotifyApi {
 
     constructor() {
         this._apiBase = API.BASE;
@@ -26,9 +26,14 @@ export default class ServerApi {
     };
 
     async getPlaylistInfo(id) {
-        throw Error("Not implemented!")
-        // todo
-        // `GET https://afternoon-waters-49321.herokuapp.com/v1/playlists/[PLAYLIST_ID]`
+        const url = `${this._buildBaseApiUrl()}/playlists/${id}`;
+
+        const fieldsQuery = "id, name, description, owner, images, followers, tracks";
+        const params = {
+            'fields': fieldsQuery
+        };
+
+        return NetworkService.get(url, params);
     }
 
 }

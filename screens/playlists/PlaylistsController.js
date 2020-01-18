@@ -21,8 +21,9 @@ export default class PlaylistsController extends React.Component {
         };
 
         this._viewModel = this.props.viewModel;
-        this._navigator = this.props.navigator;
+        this._navigator = this.props.navigation;
 
+        this.onPlaylistClick = this.onPlaylistClick.bind(this);
     }
 
     componentDidMount() {
@@ -31,8 +32,7 @@ export default class PlaylistsController extends React.Component {
 
 
     onPlaylistClick(playlist) {
-        // todo start details
-        // this._navigator.navigate('PlaylistDetails', {playlist: playlist});
+        this._navigator.navigate("PlaylistDetails", {playlistId: playlist.id});
     }
 
     loadMorePlaylists = () => {
@@ -45,7 +45,7 @@ export default class PlaylistsController extends React.Component {
         }
     };
 
-    _loadPlaylists = () => {
+    _loadPlaylists() {
         this._changeLoadingState(true);
         this._changeError(null);
 
