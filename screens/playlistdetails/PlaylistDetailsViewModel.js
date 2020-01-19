@@ -34,12 +34,17 @@ export default class PlaylistDetailsViewModel {
     }
 
     _getTrackDetails(rawTrack) {
+        const artists = [];
+        rawTrack.track.artists.forEach(rawArtist => {
+           artists.push(rawArtist.name)
+        });
+
         return {
             id: rawTrack.track.id,
             name: rawTrack.track.name,
             url: rawTrack.track.external_urls.spotify,
             imageUrl: Utils.getSpotifyImageUrl(rawTrack.track.album.images, TRACK_IMAGE_PLACEHOLDER),
-            // todo artists: rawTrack.track.artists.href,
+            artists: artists,
         }
     }
 

@@ -1,9 +1,9 @@
 import React from "react";
-import {StyleSheet, Text, ToastAndroid} from 'react-native';
-import Layout from "../../constants/Layout";
+import PlaylistDetails from "./PlaylistDetails";
+import ProgressPanel from "../../components/ProgressPanel";
 
 /**
- * Controller for {@link TODO}
+ * Controller for {@link PlaylistDetails}. Store and control view's state.
  */
 export default class PlaylistDetailsController extends React.Component {
 
@@ -17,7 +17,7 @@ export default class PlaylistDetailsController extends React.Component {
             ownerName: "",
             followers: 0,
 
-            isLoading: false,
+            isLoading: true,
             error: null
         };
 
@@ -32,6 +32,7 @@ export default class PlaylistDetailsController extends React.Component {
 
 
     _loadPlaylistDetails() {
+        this._changeLoadingState(true);
         this._viewModel.loadPlaylistDetails(this._id)
             .then((playlistDetails) => {
 
@@ -42,14 +43,21 @@ export default class PlaylistDetailsController extends React.Component {
                     playlistDetails.ownerName,
                     playlistDetails.followers,
                 );
+                this._setTracks(playlistDetails.tracks);
 
-                console.log(JSON.stringify(playlistDetails));
+                this._changeLoadingState(false);
             })
             .catch((error) => {
                 console.log(error);
-                ToastAndroid.show(error, 3000)
-
+                this._changeError(error);
+                this._changeLoadingState(false);
             })
+    }
+
+    _changeLoadingState(isLoading) {
+        this.setState({
+            isLoading: isLoading,
+        });
     }
 
     _setPlaylistDetails(name, description, imageUrl, ownerName, followers) {
@@ -62,18 +70,27 @@ export default class PlaylistDetailsController extends React.Component {
         });
     }
 
+    _setTracks(tracks) {
+        this.setState({
+            tracks: tracks,
+        });
+    }
+
     render() {
-        return (
-            <Text style={styles.title}>{this.state.name} {this.state.description}</Text>
-        )
+        if (this.state.isLoading) {
+            return (<ProgressPanel/>)
+        } else {
+            return (
+                <PlaylistDetails
+                    name={this.state.name}
+                    description={this.state.description}
+                    imageUrl={this.state.imageUrl}
+                    owner={this.state.owner}
+                    followers={this.state.followers}
+                    tracks={this.state.tracks}
+                />
+            )
+        }
     }
 
 }
-
-const styles = StyleSheet.create({
-    title: {
-        fontSize: Layout.headerTextSize,
-        fontWeight: "700",
-        padding: Layout.paddingNormal
-    }
-});
