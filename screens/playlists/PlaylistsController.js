@@ -1,5 +1,6 @@
 import React from 'react'
 import FeaturedPlaylists from "./FeaturedPlaylists";
+import ProgressPanel from "../../components/ProgressPanel";
 
 const PLAYLIST_LOAD_LIMIT = 6;
 
@@ -51,14 +52,16 @@ export default class PlaylistsController extends React.Component {
 
         this._viewModel.loadPlaylistsMeta(this.state.offset, PLAYLIST_LOAD_LIMIT)
             .then(playlistsMeta => {
-                this._changeLoadingState(false);
                 this._setTitle(playlistsMeta.title);
                 this._setIsEndReached(playlistsMeta.playlists.length === 0);
                 this._appendPlaylists(playlistsMeta.playlists);
+                this._changeLoadingState(false);
+
             })
             .catch((error) => {
-                this._changeLoadingState(false);
+                console.log(error);
                 this._changeError(error);
+                this._changeLoadingState(false);
             });
     };
 
@@ -93,16 +96,20 @@ export default class PlaylistsController extends React.Component {
     }
 
     render() {
-        return (
-            <FeaturedPlaylists
-                title={this.state.title}
-                playlists={this.state.playlists}
-                isLoading={this.state.isLoading}
+        if (this.state.playlists.length === 0 && this.state.isLoading) {
+            return (<ProgressPanel/>)
+        } else {
+            return (
+                <FeaturedPlaylists
+                    title={this.state.title}
+                    playlists={this.state.playlists}
+                    isLoading={this.state.isLoading}
 
-                loadMorePlaylists={this.loadMorePlaylists}
-                onPlaylistClick={this.onPlaylistClick}
-            />
-        )
+                    loadMorePlaylists={this.loadMorePlaylists}
+                    onPlaylistClick={this.onPlaylistClick}
+                />
+            )
+        }
     }
 
 }

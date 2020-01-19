@@ -1,7 +1,5 @@
 /**
  * Class for providing Playlists. Defines the data source (depending on network conditions ex.).
- *
- * todo: fix http errors handling
  */
 export default class PlaylistsRepository {
 
@@ -22,7 +20,7 @@ export default class PlaylistsRepository {
             }
 
         } catch (errorCode) {
-            return `Playlists request failed (code ${errorCode}). Try again later.`;
+            return Error(`Playlists request failed (code ${errorCode}). Try again later.`);
         }
     }
 
@@ -36,7 +34,7 @@ export default class PlaylistsRepository {
         try {
             return await this._spotifyApi.getPlaylistInfo(id);
         } catch (errorCode) {
-            return `Unable to load playlist details (code ${errorCode}). Try again later.`;
+            return Error(`Unable to load playlist details (code ${errorCode}). Try again later.`);
         }
     }
 

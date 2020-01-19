@@ -1,32 +1,18 @@
 import React from 'react';
-import {
-    View,
-    FlatList,
-    StyleSheet,
-    ToastAndroid,
-    Text,
-} from 'react-native';
+import {FlatList, StyleSheet, Text, ToastAndroid, View,} from 'react-native';
 import Constants from 'expo-constants';
-import PropTypes from 'prop-types';
 
 import Colors from '../../constants/Colors';
 import Layout from '../../constants/Layout';
 import PlaylistTile from '../../components/PlaylistTile';
 
 const COLUMNS_NUM = 2;
+const LIST_END_THRESHOLD = 0;
 
 /**
  * View component for displaying list of Playlists
  */
 export default class FeaturedPlaylists extends React.Component {
-
-    static propTypes = {
-        playlists: PropTypes.array.isRequired,
-        isLoading: PropTypes.bool.isRequired,
-
-        loadMorePlaylists: PropTypes.func,
-        onPlaylistClick: PropTypes.func.isRequired,
-    };
 
     _showEndReachedToast() {
         ToastAndroid.show(`No more playlists`, ToastAndroid.SHORT);
@@ -79,7 +65,7 @@ export default class FeaturedPlaylists extends React.Component {
                         keyExtractor={(item, index) => item.id}
                         refreshing={isLoading}
                         onEndReached={loadMorePlaylists}
-                        onEndThreshold={0}
+                        onEndThreshold={LIST_END_THRESHOLD}
                     />
                 }
             </View>
@@ -91,7 +77,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.background,
-        marginTop: Constants.statusBarHeight,
+        paddingTop: Constants.statusBarHeight,
     },
 
     titleContainer: {
