@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from 'react-navigation';
 
-import FeaturedPlaylistsProvider from "../screens/playlists/FeaturedPlaylistsProvider";
-import PlaylistDetailsProvider from "../screens/playlistdetails/PlaylistDetailsProvider";
+import FeaturedPlaylistsProvider from "../ui/screens/featureplaylists/FeaturedPlaylistsProvider";
+import PlaylistDetailsProvider from "../ui/screens/playlistdetails/PlaylistDetailsProvider";
 
 
 export default createStackNavigator({
@@ -10,8 +10,7 @@ export default createStackNavigator({
         Playlists: {
             screen: FeaturedPlaylistsProvider,
             navigationOptions: ({navigation}) => ({
-                header: null,
-                // title: `${navigation.state.params.name}'s Profile'`,
+                header: null
             }),
         },
 

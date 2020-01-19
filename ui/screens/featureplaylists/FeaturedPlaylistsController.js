@@ -7,7 +7,7 @@ const PLAYLIST_LOAD_LIMIT = 6;
 /**
  * Controller for {@link FeaturedPlaylists}
  */
-export default class PlaylistsController extends React.Component {
+export default class FeaturedPlaylistsController extends React.Component {
 
     constructor(props) {
         super(props);
@@ -50,7 +50,7 @@ export default class PlaylistsController extends React.Component {
         this._changeLoadingState(true);
         this._changeError(null);
 
-        this._viewModel.loadPlaylistsMeta(this.state.offset, PLAYLIST_LOAD_LIMIT)
+        this._viewModel.loadFeaturedPlaylists(this.state.offset, PLAYLIST_LOAD_LIMIT)
             .then(playlistsMeta => {
                 this._setTitle(playlistsMeta.title);
                 this._setIsEndReached(playlistsMeta.playlists.length === 0);

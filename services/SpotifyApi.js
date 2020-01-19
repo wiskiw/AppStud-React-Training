@@ -15,7 +15,7 @@ export default class SpotifyApi {
         return `${this._apiBase}/v${this._apiVersion}`
     }
 
-    async getPlaylists(offset, limit) {
+    async getFeaturedPlaylists(offset, limit) {
         const url = `${this._buildBaseApiUrl()}/browse/featured-playlists`;
         const params = {
             'offset': offset,

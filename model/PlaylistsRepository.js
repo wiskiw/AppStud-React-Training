@@ -8,12 +8,12 @@ export default class PlaylistsRepository {
     }
 
     /**
-     * Return promise to fetch all playlists since #offset and limited by #limit.
+     * Return promise to fetch featured playlists since #offset and limited by #limit.
      */
-    async getRange(offset, limit) {
+    async getFeaturedPlaylists(offset, limit) {
         let playlists;
         try {
-            playlists = await this._spotifyApi.getPlaylists(offset, limit);
+            playlists = await this._spotifyApi.getFeaturedPlaylists(offset, limit);
             return {
                 message: playlists.message,
                 playlists: playlists.playlists.items

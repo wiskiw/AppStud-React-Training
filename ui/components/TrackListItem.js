@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {StyleSheet, Text, View,} from 'react-native';
-import Colors from "../constants/Colors";
-import Layout from "../constants/Layout";
+import Colors from "../../constants/Colors";
+import Layout from "../../constants/Layout";
 
 /**
  * Component for displaying track in list

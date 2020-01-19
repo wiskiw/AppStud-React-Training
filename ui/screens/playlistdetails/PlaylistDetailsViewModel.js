@@ -1,7 +1,7 @@
 /**
  * ViewModel for preparing playlist details data
  */
-import Utils from "../Utils";
+import UIUtils from "../../UIUtils";
 
 const PLAYLIST_IMAGE_PLACEHOLDER = 'https://logomaster.ai/static/media/gallery002.936afb9d.png';
 const TRACK_IMAGE_PLACEHOLDER = 'https://logomaster.ai/static/media/gallery002.936afb9d.png';
@@ -19,7 +19,7 @@ export default class PlaylistDetailsViewModel {
             id: playlistData.id,
             name: playlistData.name,
             description: playlistData.description,
-            imageUrl: Utils.getSpotifyImageUrl(playlistData.images, PLAYLIST_IMAGE_PLACEHOLDER),
+            imageUrl: UIUtils.getSpotifyImageUrl(playlistData.images, PLAYLIST_IMAGE_PLACEHOLDER),
             followers: playlistData.followers.total,
             ownerName: playlistData.owner.display_name,
             tracks: []
@@ -43,7 +43,7 @@ export default class PlaylistDetailsViewModel {
             id: rawTrack.track.id,
             name: rawTrack.track.name,
             url: rawTrack.track.external_urls.spotify,
-            imageUrl: Utils.getSpotifyImageUrl(rawTrack.track.album.images, TRACK_IMAGE_PLACEHOLDER),
+            imageUrl: UIUtils.getSpotifyImageUrl(rawTrack.track.album.images, TRACK_IMAGE_PLACEHOLDER),
             artists: artists,
         }
     }

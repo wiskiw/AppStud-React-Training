@@ -1,6 +1,6 @@
 
 
-export default class Utils {
+export default class UIUtils {
 
     /**
      * Safty take first image URL from Spotify images array or return placeholder url.

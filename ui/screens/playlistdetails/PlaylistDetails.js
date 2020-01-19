@@ -2,8 +2,8 @@ import React from 'react';
 import {FlatList, Image, StyleSheet, Text, ToastAndroid, View} from 'react-native';
 import Constants from 'expo-constants';
 
-import Colors from '../../constants/Colors';
-import Layout from '../../constants/Layout';
+import Colors from '../../../constants/Colors';
+import Layout from '../../../constants/Layout';
 import TrackListItem from "../../components/TrackListItem";
 
 /**

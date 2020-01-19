@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SpotifyApi from "../../services/SpotifyApi";
-import PlaylistsRepository from "../../model/PlaylistsRepository";
+import SpotifyApi from "../../../services/SpotifyApi";
+import PlaylistsRepository from "../../../model/PlaylistsRepository";
 import PlaylistDetailsController from "./PlaylistDetailsController";
 import PlaylistDetailsViewModel from "./PlaylistDetailsViewModel";
 

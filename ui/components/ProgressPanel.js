@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {StyleSheet, Text, View} from 'react-native';
-import Layout from "../constants/Layout";
-import Colors from "../constants/Colors";
+import Layout from "../../constants/Layout";
+import Colors from "../../constants/Colors";
 
 /**
  * Component for displaying infinity progress
