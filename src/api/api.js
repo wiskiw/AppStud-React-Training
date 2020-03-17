@@ -10,7 +10,9 @@ import Proxy from './Proxy'
  * the .env file values, use mocks, ...
  */
 
-const apiEndpoint = Config.API_ENDPOINT
+// ToDo: fix .inv config parsing
+// const apiEndpoint = Config.API_ENDPOINT
+const apiEndpoint = 'https://afternoon-waters-49321.herokuapp.com/v1'
 const debugMode = Config.DEBUG_MODE
 const api = new Proxy(apiEndpoint, debugMode)
 

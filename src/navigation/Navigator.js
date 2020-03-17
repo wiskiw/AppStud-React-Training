@@ -1,15 +1,17 @@
 import React from 'react'
 import { createAppContainer } from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator } from 'react-navigation-stack'
 import navigationService from './navigationService'
-import Example from '../modules/example/scenes/Example'
-
+import FeaturedPlaylists from '../modules/example/scenes/FeaturedPlaylists'
+import PlaylistDetails from '../modules/example/scenes/PlaylistDetails'
 
 const RootStack = createStackNavigator(
   {
     Main: {
-      screen: Example,
-      path: '',
+      screen: FeaturedPlaylists,
+    },
+    Details: {
+      screen: PlaylistDetails,
     },
   },
   {

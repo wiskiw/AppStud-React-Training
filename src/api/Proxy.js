@@ -9,7 +9,7 @@ import AxiosLogger from 'axios-logger'
 export default class Proxy {
   constructor(apiEndpoint, debugMode) {
     // Transform truthy / falsy values.
-    this.debugMode = !!(debugMode)
+    this.debugMode = !!debugMode
 
     this.axios = axios.create({
       baseURL: apiEndpoint,
@@ -33,6 +33,80 @@ export default class Proxy {
     return {
       'content-type': 'application/json',
       'Accept-Language': i18n.locale,
+    }
+  }
+
+  statusNotOk = (response) => {
+    const error = Error(`Status: ${response.status}`)
+    console.error(error)
+    throw error
+  }
+
+  onError = (error) => {
+    console.error(error)
+    throw error
+  }
+
+  getFeaturedPlaylists = async (offset, limit) => {
+    try {
+      const response = await this.axios.get('/browse/featured-playlists', {
+        params: {
+          offset,
+          limit,
+        },
+      })
+
+      if (response.status !== 200) {
+        return this.statusNotOk(response)
+      }
+
+      return response.data
+    } catch (error) {
+      return this.onError(error)
+    }
+  }
+
+  getPlaylistDetails = async (id) => {
+    try {
+      const response = await this.axios.get(`playlists/${id}`, {
+        params: {
+          fields: 'id, name, description, images, owner, followers, tracks',
+        },
+      })
+
+      if (response.status !== 200) {
+        return this.statusNotOk(response)
+      }
+
+      const playlistData = response.data
+      const playlistDetails = {
+        id: playlistData.id,
+        name: playlistData.name,
+        description: playlistData.description,
+        images: playlistData.images,
+        followers: playlistData.followers.total,
+        ownerName: playlistData.owner.display_name,
+        tracks: [],
+      }
+
+      const getTrackDetails = (rawTrack) => {
+        const artists = []
+        rawTrack.track.artists.forEach((rawArtist) => artists.push(rawArtist.name))
+        return {
+          id: rawTrack.track.id,
+          name: rawTrack.track.name,
+          url: rawTrack.track.external_urls.spotify,
+          artists,
+        }
+      }
+
+      playlistData.tracks.items.forEach((rawTrack) => {
+        playlistDetails.tracks.push(getTrackDetails(rawTrack))
+      })
+
+      return playlistDetails
+    } catch (error) {
+      return this.onError(error)
     }
   }
 }
