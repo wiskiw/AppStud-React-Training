@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {
   View, Image, TouchableOpacity, StyleSheet,
 } from 'react-native'
+import DefaultTheme from '../../../themes/default'
 
 /**
  * Component for displaying playlist as a square tiles.
@@ -17,14 +18,14 @@ const PlaylistTile = ({ playlist, onClick }) => (
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
+    margin: DefaultTheme.padding.small,
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'row',
   },
   image: {
-    height: 200,
-    width: 200,
+    width: '100%',
+    aspectRatio: 1,
   },
 })
 
