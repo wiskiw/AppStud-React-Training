@@ -47,6 +47,19 @@ export default class Proxy {
     throw error
   }
 
+  /**
+   * Returns promise to load list of featured playlists.
+   *
+   * @param offset
+   * @param limit
+   * @returns {Promise<{
+   *  message: String,
+   *  playlists: [{
+   *    id : String,
+   *    image: HTMLCollectionOf<HTMLImageElement>,
+   *  }]
+   * }>}
+   */
   getFeaturedPlaylists = async (offset, limit) => {
     try {
       const response = await this.axios.get('/browse/featured-playlists', {
@@ -66,6 +79,25 @@ export default class Proxy {
     }
   }
 
+  /**
+   * Returns promise to load Playlist details.
+   *
+   * @param id Playlist's ID
+   * @returns {Promise<{
+   *  images: HTMLCollectionOf<HTMLImageElement>,
+   *  followers: Number,
+   *  ownerName: String,
+   *  name: String,
+   *  description: String,
+   *  id: String,
+   *  tracks: [{
+   *    id: String,
+   *    name: String,
+   *    url: String,
+   *    artists: [String],
+   *  }]
+   * }>}
+   */
   getPlaylistDetails = async (id) => {
     try {
       const response = await this.axios.get(`playlists/${id}`, {
